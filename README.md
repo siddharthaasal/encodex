@@ -1,4 +1,4 @@
-# Encodex  
+# Encodex  (IN PROGRESS!)
 Convert data into QR-style grid images, encrypt them, and decode seamlessly.
 
 ## Features  
