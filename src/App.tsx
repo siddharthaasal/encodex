@@ -5,8 +5,9 @@ function App() {
 
   const [data, setData] = useState("");
   const [formattedData, setFormattedData] = useState("");
-  const [grid, setGrid] = useState(Array(30).fill("").map(() => Array(30).fill("e")));
+  const [grid, setGrid] = useState(Array(30).fill("").map(() => Array(30).fill("0")));
   const [showMatrix, setShowMatrix] = useState<boolean>(false);
+  const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
     if (formattedData) {
@@ -85,6 +86,38 @@ function App() {
     console.log(formattedData);
   }
 
+  function generateImage() {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) return;
+
+    const cellSize = 10; // Size of each square in pixels
+    const gridSize = 30; // 30x30 grid
+
+    canvas.width = gridSize * cellSize;
+    canvas.height = gridSize * cellSize;
+
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
+        ctx.fillStyle = grid[row][col] === "1" ? "black" : "white";
+        ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+      }
+    }
+
+    // Convert canvas to an image URL
+    const imageUrl = canvas.toDataURL("image/png");
+    setImgUrl(imageUrl);
+    return;
+
+    // Download the image
+    // const link = document.createElement("a");
+    // link.href = imageUrl;
+    // link.download = "encodex.png";
+    // link.click();
+  }
+
+
   return (
     <>
       <h1>Encodex</h1>
@@ -107,8 +140,9 @@ function App() {
           </div>
         }
 
-
       </div>
+      <button onClick={generateImage}>Generate QR Image</button>
+      <img src={imgUrl} alt="" />
 
     </>
   )
