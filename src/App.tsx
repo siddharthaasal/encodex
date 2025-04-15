@@ -123,9 +123,17 @@ function App() {
       <h1>Encodex</h1>
 
       <div>
-        <input type="text" onChange={(e) => {
-          setData(e.target.value)
-        }} />
+        <input
+          type="text"
+          onChange={(e) => {
+            setData(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              charToAscii(data);
+            }
+          }}
+        />
         <button onClick={() => { charToAscii(data) }}>Encode</button>
         {
           showMatrix &&
